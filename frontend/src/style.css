@@ -1,12 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #14161c;
+  --panel: #1b1e27;
+  --border: #2a2e3a;
+  --text: #e4e6eb;
+  --muted: #8b90a0;
+  --green: #5fbf77;
+  --high: #e5636b;
+  --medium: #e5a34e;
+  --low: #4fa8c9;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: #f9fafb;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem;
+}
+
+.header h1 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.tagline {
+  color: var(--muted);
+  margin: 0.4rem 0.2rem;
+  font-size: 0.95rem;
+  /* max-width: 46ch; */
+}
+
+.cmd-line{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  flex-wrap: wrap;
+}
+
+.cmd-prompt {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.cmd-input{
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.1rem;
+  outline: none;
+}
+
+.cmd-input:focus{
+  border-bottom-color: var(--green);
+}
+
+.run-btn {
+  margin-left: auto;
+  padding: 0.5rem 1rem;
+  color: #000000;
+  background: var(--green);
+  border-radius: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.run-btn:disabled{
+  opacity: 0.6;
+  cursor: default;
+}
+
 
 .container {
   max-width: 640px;

@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import sampleFeedback from './mock/sample.json';
 
+// this is the flag defined whether to use real or sample data
+// done due to rate limit of gemini ai
 const USE_SAMPLE = true;
 
 const repoInput = ref('')
@@ -9,6 +11,13 @@ const prNumber = ref('')
 const feedback = ref(null)
 const loading = ref(false)
 const error = ref(null);
+
+const categoryList = {
+  bugs: { label: 'bugs', symbol: '!'},
+  styleViolations: { label: 'style', symbol: '~'},
+  securityIssues: { label: 'security', symbol: 'x'},
+  optimizations: { label: 'optimizations', symbol: '+'}
+}
 
 async function submitReview() {
   loading.value = true
@@ -41,9 +50,38 @@ async function submitReview() {
     loading.value = false
   }
 }
+
+function totalIssues(items){
+  return items?.length ? items?.length : 0;
+}
 </script>
 
 <template>
+  <div class="page">
+    <header class="header">
+      <h1>pr-review</h1>
+      <p class="tagline">Paste a repo and a PR number. Get back what a reviewer would flag.</p>
+    </header>
+
+    <div class="cmd-line">
+      <span class="cmd-prompt">repo</span>
+      <input v-model="repoInput" placeholder="owner/repo" class="cmd-prompt" type="text">
+      <span class="cmd-promt">pr</span>
+      <input v-model="prNumber" placeholder="1199" class="cmd-input" type="text">
+      <button @click="submitReview" class="run-btn" :disabled="loading">
+        {{ loading ? 'running' : 'review' }}
+      </button>
+    </div>
+
+
+
+
+  </div>
+
+
+
+
+  
   <div class="container">
     <h1>PR Code Reviewer</h1>
     <input v-model="repoInput" placeholder="owner/repo" class="input" />
