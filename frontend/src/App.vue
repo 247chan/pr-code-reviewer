@@ -3,8 +3,8 @@ import { ref } from 'vue'
 import sampleFeedback from './mock/sample.json';
 
 // this is the flag defined whether to use real or sample data
-// done due to rate limit of gemini ai
-const USE_SAMPLE = true;
+// added this due to rate limit of gemini ai (and for visualizing ui)
+const USE_SAMPLE = false;
 
 const repoInput = ref('')
 const prNumber = ref('')
@@ -15,7 +15,7 @@ const error = ref(null);
 const categoryList = {
   bugs: { label: 'bugs', symbol: '!'},
   styleViolations: { label: 'style', symbol: '~'},
-  securityIssues: { label: 'security', symbol: 'x'},
+  securityIssues: { label: 'security', symbol: '*'},
   optimizations: { label: 'optimizations', symbol: '+'}
 }
 
@@ -59,50 +59,48 @@ function totalIssues(items){
 <template>
   <div class="page">
     <header class="header">
-      <h1>pr-review</h1>
-      <p class="tagline">Paste a repo and a PR number. Get back what a reviewer would flag.</p>
+      <h1>pr-reviewer</h1>
+      <p class="tagline">Paste a repo and a PR number. Get back what a reviewer would flag!</p>
     </header>
 
     <div class="cmd-line">
       <span class="cmd-prompt">repo</span>
-      <input v-model="repoInput" placeholder="owner/repo" class="cmd-prompt" type="text">
-      <span class="cmd-promt">pr</span>
+      <input v-model="repoInput" placeholder="owner/repo" class="cmd-prompt" id="repo-input" type="text">
+      <span class="cmd-prompt">pr no.</span>
       <input v-model="prNumber" placeholder="1199" class="cmd-input" type="text">
       <button @click="submitReview" class="run-btn" :disabled="loading">
         {{ loading ? 'running' : 'review' }}
       </button>
     </div>
 
+    <p v-if="error" class="error-line">error: {{ error }}</p>
 
+    <div v-if="feedback" class="log">
+      <section
+        v-for="(items, category) in feedback"
+        :key="category"
+        class="log-section"
+      >
+        <div class="log-section-div">
+          <span class="log-seciton-symbol">{{ categoryList[category]?.symbol ?? '.'}}</span>
+          <span class="log-section-label">{{ categoryList[category]?.label ?? category }}</span>
+          <span class="log-section-count">{{ totalIssues(items) }}</span>
+        </div>
 
+        <p v-if="items.length === 0" class="log-empty">clean - nothing flagged</p>
 
-  </div>
-
-
-
-
-  
-  <div class="container">
-    <h1>PR Code Reviewer</h1>
-    <input v-model="repoInput" placeholder="owner/repo" class="input" />
-    <input v-model="prNumber" placeholder="PR number" class="input" />
-    <button @click="submitReview" class="button">
-      {{ loading ? 'Reviewing...' : 'Review PR' }}
-    </button>
-
-    <p v-if="error" class="error">{{ error }}</p>
-
-    <div v-if="feedback">
-      <div  v-for="(items, category) in feedback" :key="category" class="category">
-        <h2>{{ category }}</h2>
-        <p v-if="items.length === 0">No issues found</p>
-        <ul v-else>
-          <li v-for="(item, i) in items" :key="i" :class="'severity-' + item.severity">
-            <strong>{{ item.file }}:{{ item.line }}</strong> - {{item.description}}
-            <span class="badge">{{item.severity}}</span>
+        <ul v-else class="log-items">
+          <li
+            v-for="(item, i) in items"
+            :key="i"
+            class="log-item"
+            :class="`log-item-${item.severity}`">
+            <span class="log-item-loc">{{ item.file }}:{{ item.line }}</span>
+            <span class="log-item-desc">{{ item.description }}</span>
+            <span class="log-item-sev" :class="`sev-lvl-${item.severity}`">{{ item.severity }}</span>
           </li>
         </ul>
-      </div>
+      </section>
     </div>
   </div>
 </template>
