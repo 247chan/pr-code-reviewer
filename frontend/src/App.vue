@@ -4,7 +4,7 @@ import sampleFeedback from './mock/sample.json';
 
 // this is the flag defined whether to use real or sample data
 // added this due to rate limit of gemini ai (and for visualizing ui)
-const USE_SAMPLE = false;
+const USE_SAMPLE = true;
 
 const repoInput = ref('')
 const prNumber = ref('')
