@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import sampleFeedback from './mock/sample.json';
+
+const USE_SAMPLE = true;
 
 const repoInput = ref('')
 const prNumber = ref('')
@@ -11,6 +14,15 @@ async function submitReview() {
   loading.value = true
   error.value = null
   feedback.value = null
+
+  if(USE_SAMPLE){
+    setTimeout(() => {
+      feedback.value = sampleFeedback;
+      loading.value = false;
+    }, 500);
+    return;
+  }
+
   try{
     const [owner, repo] = repoInput.value.split('/');
     const res = await fetch('http://localhost:5000/api/review', {

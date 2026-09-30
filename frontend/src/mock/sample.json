@@ -1,0 +1,40 @@
+{
+  "bugs": [
+    {
+      "file": "utils/parser.js",
+      "line": "42",
+      "description": "Possible null reference when 'data.items' is undefined before the map() call.",
+      "severity": "high"
+    }
+  ],
+  "styleViolations": [
+    {
+      "file": "index.js",
+      "line": "1",
+      "description": "Missing newline at the end of file.",
+      "severity": "low"
+    },
+    {
+      "file": "index.js",
+      "line": "12",
+      "description": "Unexpected console.log statement; production code should typically use a structured logging utility.",
+      "severity": "low"
+    }
+  ],
+  "securityIssues": [
+    {
+      "file": "auth/login.js",
+      "line": "88",
+      "description": "User input is passed directly into a SQL query without sanitization, risking SQL injection.",
+      "severity": "high"
+    }
+  ],
+  "optimizations": [
+    {
+      "file": "components/List.vue",
+      "line": "20",
+      "description": "Re-computing filtered list on every render; consider memoizing with a computed property.",
+      "severity": "medium"
+    }
+  ]
+}
