@@ -35,10 +35,50 @@ body {
   background: #1d4ed8;
 }
 
-.feedback-box {
-  margin-top: 1rem;
-  background: #f3f4f6;
-  padding: 1rem;
-  white-space: pre-wrap;
+.category{
+  margin-top: 1.5rem;
+}
+
+.category h2 {
+  text-transform: capitalize;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.25rem;
+}
+
+.category ul{
+  list-style: none;
+  padding: 0;
+}
+
+.category li {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
   border-radius: 4px;
+  background: #f9fafb;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  margin-left: 0.5rem;
+  background: #e5e7eb;
+}
+
+.severity-high .badge { 
+  background: #fecaca;
+}
+
+.severity-medium .badge { 
+  background: #fef3c7;
+}
+
+.severity-low .badge { 
+  background: #d1fae5;
+}
+
+.error {
+  color: #dc2626;
+  margin-top: 0.5rem;
 }

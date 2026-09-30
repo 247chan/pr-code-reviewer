@@ -60,7 +60,7 @@ Git Diff:
 ${diff.slice(0, 25000)}
     `;
 
-    const result = await generateContent("gemini-3.8-flash", {
+    const result = await generateContent("gemini-3.6-flash", {
       contents: prompt,
       config: {
         responseMimeType: "application/json",
